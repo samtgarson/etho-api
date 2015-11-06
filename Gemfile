@@ -7,14 +7,17 @@ gem 'rails', '4.2.4'
 gem 'mongoid', '~> 5.0.0'
 # Skip the view layer
 gem 'rails-api'
+gem 'instagram'
+gem 'jwt'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a
-  # debugger console
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 group :development do

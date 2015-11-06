@@ -1,0 +1,11 @@
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'script/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false

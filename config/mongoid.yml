@@ -3,6 +3,7 @@ development:
   clients:
     # Defines the default client. (required)
     default:
+      logger: false
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
       database: etho_api_development
