@@ -1,5 +1,48 @@
+class AccessDeniedError < StandardError
+end
+class NotAuthenticatedError < StandardError
+end
+class AuthenticationTimeoutError < StandardError
+end
+
 class ApplicationController < ActionController::API
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  # protect_from_forgery with: :exception
+  attr_reader :current_user
+
+  rescue_from AuthenticationTimeoutError, with: :authentication_timeout
+  rescue_from NotAuthenticatedError, with: :user_not_authenticated
+  rescue_from AccessDeniedError, with: :forbidden_resource
+
+  def authenticate_request!
+    fail NotAuthenticatedError unless http_auth_token_present?
+    @current_user = JsonWebToken.user_from(@http_auth_token)
+  rescue JWT::ExpiredSignature
+    raise AuthenticationTimeoutError
+  rescue JWT::VerificationError, JWT::DecodeError
+    raise NotAuthenticatedError
+  end
+
+  def heartbeat
+    render json: { heartbeat: true }
+  end
+
+  private
+
+  # Bearer somerandomstring.encoded-payload.anotherrandomstring
+  def http_auth_token_present?
+    @http_auth_token ||= if request.headers['Authorization'].present?
+                           request.headers['Authorization'].split(' ').last
+                         end
+  end
+
+  def authentication_timeout
+    render json: { errors: ['Authentication Timeout'] }, status: 419
+  end
+
+  def forbidden_resource
+    render json: { errors: ['Not Authorized To Access Resource'] }, status: :forbidden
+  end
+
+  def user_not_authenticated
+    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+  end
 end

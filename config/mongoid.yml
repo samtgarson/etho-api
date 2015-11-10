@@ -130,6 +130,7 @@ test:
   clients:
     default:
       database: etho_api_test
+      logger: false
       hosts:
         - localhost:27017
       options:

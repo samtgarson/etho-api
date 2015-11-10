@@ -23,6 +23,7 @@ end
 
 module EthoApi
   class Application < Rails::Application
+    Mongo::Logger.logger.level = Logger::INFO
     config.generators do |g|
       g.test_framework :rspec, controller_specs: false, routing_specs: false
     end

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :users, except: [:new, :edit]
+  resources :users, except: [:new, :edit, :index]
+
+  get 'auth/:code' => 'auth#create'
+  get 'heartbeat' => 'application#heartbeat'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
