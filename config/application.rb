@@ -25,6 +25,7 @@ module EthoApi
   class Application < Rails::Application
     Mongo::Logger.logger.level = Logger::INFO
     config.generators do |g|
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
       g.test_framework :rspec, controller_specs: false, routing_specs: false
     end
   end

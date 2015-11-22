@@ -16,6 +16,7 @@ group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'rspec_junit_formatter', '0.2.2'
+  gem 'webmock'
 end
 
 group :development do
@@ -27,5 +28,5 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails', '~> 4.0'
-  gem 'faker'
+  gem 'faker', git: 'https://github.com/stympy/faker.git'
 end
