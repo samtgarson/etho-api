@@ -17,6 +17,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec_junit_formatter', '0.2.2'
   gem 'webmock'
+  gem 'coveralls', require: false
 end
 
 group :development do
