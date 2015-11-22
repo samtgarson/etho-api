@@ -24,6 +24,8 @@ end
 module EthoApi
   class Application < Rails::Application
     Mongo::Logger.logger.level = Logger::INFO
+    config.autoload_paths += %W(#{config.root}/lib)
+
     config.generators do |g|
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
       g.test_framework :rspec, controller_specs: false, routing_specs: false

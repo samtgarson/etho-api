@@ -1,33 +1,30 @@
 require 'rails_helper'
-require 'support/request_helpers'
 
-RSpec.describe 'Auth:', type: :request do
+RSpec.describe AuthController, type: :request do
+  stub_out_instagram_api
+
   describe 'GET /auth' do
-    before(:each) do 
-      allow(InstagramWrapper).to receive(:id_for).and_return(id_response)
+    before do
+      FactoryGirl.create(:user, id: example_user[:id])
     end
 
-    let(:id_response) { 123456 }
-    let!(:existing_user) { FactoryGirl.create(:user) }
-    let(:new_user) { FactoryGirl.build(:user, id: id_response) }
-    let(:user_count) { User.count }
+    context 'given a valid code' do
+      it 'returns token for existing user' do
+        get '/auth/valid_code'
 
-    it 'creates a user for first time login' do
-      allow(InstagramWrapper).to receive(:profile).and_return(new_user)
-      get '/auth/valid_code'
-
-      expect(response).to be_success
-      expect(json).to have_key('token')
-      expect(user_count).to eq(2)
+        expect(response).to be_success
+        expect(json).to have_key('token')
+        expect(json['user']).to include('id' => example_user[:id].to_i)
+      end
     end
 
-    it 'returns user for existing user' do
-      allow(InstagramWrapper).to receive(:profile).and_return(existing_user)
-      get '/auth/valid_code'
+    context 'given an invalid code' do
+      it 'returns an error' do
+        get '/auth/invalid_code'
 
-      expect(response).to be_success
-      expect(json).to have_key('token')
-      expect(user_count).to eq(1)
+        expect(response).not_to be_success
+        expect(json['errors']).to include('Not Authenticated')
+      end
     end
   end
 end

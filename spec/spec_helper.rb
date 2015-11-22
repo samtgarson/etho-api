@@ -16,8 +16,16 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'support/instagram_helpers'
+require 'support/request_helpers'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
+  config.extend InstagramHelpers
+  config.include InstagramHelpers
+  config.include RequestHelpers
+  config.extend RequestHelpers
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

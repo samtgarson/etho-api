@@ -5,7 +5,9 @@ class User
   validates :_id, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
   validates :full_name, presence: true
-  validates :counts, presence: true
+
+  has_many :images, dependent: :destroy
+  has_and_belongs_to_many :tagged_images, class_name: 'Image', inverse_of: :tagged_user
 
   field :full_name, type: String
   field :bio, type: String
@@ -14,10 +16,10 @@ class User
   field :website, type: String
   field :counts
   field :processed, type: Mongoid::Boolean, default: false
-  field :_id, type: Integer
+  field :_id
 
   def self.verify_auth_code(code)
-    user = find_or_create_by(_id: InstagramWrapper.id_for(code))
+    user = find_or_create_by(_id: Insta.instagram_id_for(code))
     user.update_if_required
   end
 
@@ -26,12 +28,21 @@ class User
   end
 
   def update_if_required
-    if !processed && stale?
+    if stale?
       update_profile
       process_user_images
-      save
+      save!
     end
     self
+  end
+
+  def basics
+    {
+      id: _id,
+      full_name: full_name,
+      username: username,
+      profile_picture: profile_picture
+    }
   end
 
   private
@@ -41,20 +52,16 @@ class User
   end
 
   def update_profile
-    InstagramWrapper.profile(me).attributes.each do |k, v|
+    Insta.new.profile(me).attributes.each do |k, v|
       self[k] = v
     end
   end
 
   def process_user_images
-    # nothing yet
+    # Nothing yet
   end
 
   def stale?
     !updated_at || updated_at < 1.day.ago
-  end
-
-  def processed?
-    processed
   end
 end

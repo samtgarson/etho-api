@@ -5,24 +5,23 @@ RSpec.describe User, type: :model do
     expect(FactoryGirl.build(:user, full_name: nil)).to be_invalid
   end
 
+  before(:each) do
+    allow_any_instance_of(Insta).to receive(:profile).and_return(FactoryGirl.build(:user, _id: 123456))
+  end
+
   describe '#update_if_required' do
-    let(:user) { FactoryGirl.build(:user, updated_at: update_time) }
+    let!(:stale_user) { FactoryGirl.create(:user, updated_at: 3.days.ago, _id: 123456) }
+    let!(:fresh_user) { FactoryGirl.create(:user, updated_at: Time.now) }
 
     context 'given a stale user' do
-      let(:update_time) { 3.days.ago }
-
       it 'should update the user' do
-        expect(user).to receive(:update_profile)
-        user.update_if_required
+        expect { stale_user.update_if_required }.to change { stale_user.full_name }
       end
     end
 
     context 'given a fresh user' do
-      let(:update_time) { Date.today }
-
       it 'should leave the user alone' do
-        expect(user).to_not receive(:update_profile)
-        user.update_if_required
+        expect { fresh_user.update_if_required }.not_to change { fresh_user.full_name }
       end
     end
   end

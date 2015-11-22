@@ -1,14 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :request do
+RSpec.describe UsersController, type: :request do
   describe 'GET /user' do
-    let!(:user) { FactoryGirl.create(:user) }
-    before { mock_authorization }
+    mock_authorization
 
-    it 'works! (now write some real specs)' do
-      get user_path(id: user.id)
-      expect(json["_id"]).to eq(user.id)
+    it 'returns the current user' do
+      get user_path 'self'
       expect(response).to have_http_status(200)
+      expect(json['_id']).to eq(current_user.id)
+    end
+
+    it 'returns the current user by id' do
+      get user_path current_user._id
+      expect(response).to have_http_status(200)
+      expect(json['_id']).to eq(current_user.id)
     end
   end
 end

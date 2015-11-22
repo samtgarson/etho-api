@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "code": 200
+  },
+  "data": {
+    "username": "samtgarson",
+    "bio": "Designer/developer in London. A lot of my photos are of uneaten food. Don't worry though, I did eat it afterwards.",
+    "website": "http://samgarson.com",
+    "profile_picture": "https://scontent.cdninstagram.com/hphotos-xpa1/t51.2885-19/s150x150/11348090_384992035024860_251466201_a.jpg",
+    "full_name": "Sam Garson",
+    "counts": {
+      "media": 64,
+      "followed_by": 185,
+      "follows": 169
+    },
+    "id": "4079668"
+  }
+}
