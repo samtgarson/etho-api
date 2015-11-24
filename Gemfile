@@ -6,6 +6,7 @@ gem 'mongoid', '~> 5.0.0'
 gem 'rails-api'
 gem 'instagram'
 gem 'jwt'
+gem 'color'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
