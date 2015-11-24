@@ -3,6 +3,9 @@ AllCops:
     - 'bin/**/*'
     - 'db/**/*'
     - 'script/**/*'
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "log/**/*"
 
 Style/Documentation:
   Enabled: false
