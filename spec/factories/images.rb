@@ -10,11 +10,10 @@ FactoryGirl.define do
     likes { rand(100) }
     link { Faker::Internet.url }
     caption { Faker::Hacker.say_something_smart }
-    _id { Faker::Number.number(20) }
-    type { %w(image video).sample }
+    _id { Faker::Number.number(20).to_s }
+    type { [:image, :video].sample }
 
-    url { Faker::Internet.url }
-    palette []
+    urls { { big: 'spec/fixtures/test_image.jpg', small: 'spec/fixtures/test_image.jpg' } }
     processed false
     season ''
   end

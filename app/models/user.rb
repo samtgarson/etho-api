@@ -6,7 +6,7 @@ class User
   validates :username, presence: true, uniqueness: true
   validates :full_name, presence: true
 
-  has_many :images, dependent: :destroy
+  has_many :images, dependent: :destroy, inverse_of: :user
   has_and_belongs_to_many :tagged_images, class_name: 'Image', inverse_of: :tagged_user
 
   field :full_name, type: String

@@ -23,7 +23,7 @@ class ImageBuilder
   def completed_hash
     transformed_hash.tap do |h|
       h[:_id] = h[:id]
-      h[:url] = h[:images]
+      h[:urls] = h[:images]
       h[:user_id] = find_user(h[:user])
     end
   end
@@ -47,11 +47,18 @@ class ImageBuilder
   end
 
   def images(value)
-    value['standard_resolution']['url']
+    {
+      big: value['standard_resolution']['url'],
+      small: value['low_resolution']['url']
+    }
   end
 
   def tags(value)
     value.map(&:to_sym)
+  end
+
+  def type(value)
+    value.to_sym
   end
 
   def find_user(value)

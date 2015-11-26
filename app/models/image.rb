@@ -19,14 +19,15 @@ class Image
   field :link
   field :caption
   field :_id
-  field :type
+  field :type, type: Symbol
 
-  field :url
+  field :urls, type: Hash
   field :processed, type: Mongoid::Boolean, default: false
-  field :season
+  field :season, type: Symbol
 
   def video?
-    type != 'image'
+    type != :image
+  end
 
   def process_colours
     self.palette ||= Palette.new_from_url(urls[:small])

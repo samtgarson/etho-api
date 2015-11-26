@@ -51,6 +51,7 @@ RSpec.describe Insta do
     it 'has the correct attributes' do
       expect(image[:likes]).to eq example_image[:likes][:count].to_i
       expect(image[:comments]).to eq example_image[:comments][:count].to_i
+      expect(image[:type]).to be_a Symbol
     end
 
     it 'converts the attributes correctly' do
