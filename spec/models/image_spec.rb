@@ -17,4 +17,18 @@ RSpec.describe Image, type: :model do
       end
     end
   end
+
+  describe '#process_colours' do
+    before do
+      allow(Palette)
+        .to receive(:new_from_url)
+        .and_return(FactoryGirl.build(:palette))
+    end
+
+    let(:image) { FactoryGirl.build(:image) }
+    it 'creates a new palette after save' do
+      image.save
+      expect(image.palette).to be_a Palette
+    end
+  end
 end

@@ -55,6 +55,8 @@ GEM
     byebug (8.2.0)
     coderay (1.1.0)
     color (1.8)
+    colorscore (0.0.4)
+      color
     coveralls (0.8.9)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
@@ -229,6 +231,7 @@ PLATFORMS
 
 DEPENDENCIES
   color
+  colorscore
   coveralls
   database_cleaner
   factory_girl_rails (~> 4.0)
