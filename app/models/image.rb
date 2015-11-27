@@ -32,4 +32,29 @@ class Image
   def process_colours
     self.palette ||= Palette.new_from_url(urls[:small])
   end
+
+  def season
+    %i(spring summer autumn).each do |season|
+      return season if send(season).cover? days_into_year
+    end
+    :winter
+  end
+
+  private
+
+  def days_into_year
+    (created_time - created_time.beginning_of_year).to_i
+  end
+
+  def spring
+    59..151
+  end
+
+  def summer
+    152..243
+  end
+
+  def autumn
+    244..334
+  end
 end

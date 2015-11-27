@@ -31,4 +31,21 @@ RSpec.describe Image, type: :model do
       expect(image.palette).to be_a Palette
     end
   end
+
+  describe '#season' do
+    sample_dates = {
+      spring: DateTime.new(2015, 3, 12),
+      summer: DateTime.new(2015, 7, 15),
+      autumn: DateTime.new(2015, 10, 10),
+      winter: DateTime.new(2015, 1, 1)
+    }
+
+    sample_dates.each do |season, date|
+      image = FactoryGirl.build(:image, created_time: date)
+
+      it 'returns the correct season' do
+        expect(image.season).to eq season
+      end
+    end
+  end
 end
