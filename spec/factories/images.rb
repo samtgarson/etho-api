@@ -6,7 +6,7 @@ FactoryGirl.define do
     location { "#{Faker::Address.street_address}, #{Faker::Address.city}" }
     filter { Faker::Hipster.words(1) }
     comments { rand(50) }
-    created_time { Faker::Time.backward(100) }
+    created_at { Faker::Time.backward(100) }
     likes { rand(100) }
     link { Faker::Internet.url }
     caption { Faker::Hacker.say_something_smart }

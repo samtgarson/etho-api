@@ -24,7 +24,8 @@ class ImageBuilder
     transformed_hash.tap do |h|
       h[:_id] = h[:id]
       h[:urls] = h[:images]
-      h[:user_id] = find_user(h[:user])
+      h[:user_id] = h[:user]['id']
+      h[:created_at] = h[:created_time]
     end
   end
 
@@ -62,7 +63,7 @@ class ImageBuilder
   end
 
   def find_user(value)
-    User.find_by(value)._id
+    User.find(value['id'])._id
   end
 
   def tag_users

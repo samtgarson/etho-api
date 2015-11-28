@@ -14,7 +14,7 @@ class Image
   field :location
   field :filter
   field :comments, type: Integer
-  field :created_time, type: DateTime
+  field :created_at, type: DateTime
   field :likes, type: Integer
   field :link
   field :caption
@@ -43,7 +43,7 @@ class Image
   private
 
   def days_into_year
-    (created_time - created_time.beginning_of_year).to_i
+    (created_at - created_at.beginning_of_year).to_i
   end
 
   def spring

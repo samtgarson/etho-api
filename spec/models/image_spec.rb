@@ -41,7 +41,7 @@ RSpec.describe Image, type: :model do
     }
 
     sample_dates.each do |season, date|
-      image = FactoryGirl.build(:image, created_time: date)
+      image = FactoryGirl.build(:image, created_at: date)
 
       it 'returns the correct season' do
         expect(image.season).to eq season
