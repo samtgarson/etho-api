@@ -40,6 +40,11 @@ class Image
     :winter
   end
 
+  def time_of_day
+    return :day if created_at >= morning && created_at < evening
+    :night
+  end
+
   private
 
   def days_into_year
@@ -56,5 +61,13 @@ class Image
 
   def autumn
     244..334
+  end
+
+  def morning
+    created_at.change(hour: 2, minute: 0, second: 0)
+  end
+
+  def evening
+    created_at.change(hour: 19, minute: 30, second: 0)
   end
 end
