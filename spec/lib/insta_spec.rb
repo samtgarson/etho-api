@@ -16,9 +16,8 @@ RSpec.describe Insta do
     end
   end
 
-  describe '#profile' do
-    let(:insta) { Insta.new }
-    subject(:profile) { insta.profile }
+  describe '.profile' do
+    subject(:profile) { Insta.profile }
 
     it 'returns a user' do
       expect(profile).to be_a User
@@ -31,9 +30,8 @@ RSpec.describe Insta do
     end
   end
 
-  describe '#user_images' do
-    let(:insta) { Insta.new }
-    let(:images) { insta.user_images(nil) }
+  describe '.user_images' do
+    let(:images) { Insta.user_images(nil) }
 
     it 'recursively fetches images' do
       expect(images.count).to eq 2
@@ -41,12 +39,11 @@ RSpec.describe Insta do
     end
   end
 
-  describe '#image' do
+  describe '.image' do
     before do
       FactoryGirl.create(:user, example_user)
     end
-    let(:insta) { Insta.new }
-    let(:image) { insta.image(123) }
+    let(:image) { Insta.image(123) }
 
     it 'returns an image' do
       expect(image).to be_an Image

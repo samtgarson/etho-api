@@ -5,8 +5,10 @@ RSpec.describe User, type: :model do
     expect(FactoryGirl.build(:user, full_name: nil)).to be_invalid
   end
 
-  before(:each) do
-    allow_any_instance_of(Insta).to receive(:profile).and_return(FactoryGirl.build(:user, _id: 123456))
+  before do
+    allow(Insta).to receive_messages(
+      profile: FactoryGirl.build(:user, _id: 123456),
+      user_images: FactoryGirl.build_list(:image, 5))
   end
 
   describe '#update_if_required' do
@@ -16,6 +18,7 @@ RSpec.describe User, type: :model do
     context 'given a stale user' do
       it 'should update the user' do
         expect { stale_user.update_if_required }.to change { stale_user.full_name }
+        expect(stale_user.images.count).to eq 5
       end
     end
 

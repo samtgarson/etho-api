@@ -21,6 +21,7 @@ class User
   def self.verify_auth_code(code)
     user = find_or_create_by(_id: Insta.instagram_id_for(code))
     user.update_if_required
+    user
   end
 
   def new_auth_token
@@ -28,21 +29,11 @@ class User
   end
 
   def update_if_required
-    if stale?
-      update_profile
-      process_user_images
-      save!
-    end
-    self
+    update_profile if stale?
   end
 
   def basics
-    {
-      id: _id,
-      full_name: full_name,
-      username: username,
-      profile_picture: profile_picture
-    }
+    as_json only: [:_id, :full_name, :username, :profile_picture]
   end
 
   private
@@ -52,13 +43,19 @@ class User
   end
 
   def update_profile
-    Insta.new.profile(me).attributes.each do |k, v|
+    Insta.profile(me).attributes.each do |k, v|
       self[k] = v
     end
+    process_user_images
+
+    self.processed = true
+    save!
   end
 
   def process_user_images
-    # Nothing yet
+    new_images = Insta.user_images
+    images.delete_all
+    images << new_images
   end
 
   def stale?

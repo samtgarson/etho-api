@@ -14,7 +14,7 @@ RSpec.describe AuthController, type: :request do
 
         expect(response).to be_success
         expect(json).to have_key('token')
-        expect(json['user']).to include('id' => example_user[:id].to_i)
+        expect(json['user']).to include('_id' => example_user[:id].to_i)
       end
     end
 
