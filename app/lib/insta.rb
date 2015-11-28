@@ -1,8 +1,4 @@
 class Insta
-  def initialize
-    @client = Instagram.client(access_token: self.class.access_token)
-  end
-
   class << self
     attr_accessor :access_token
 
@@ -13,9 +9,22 @@ class Insta
     end
   end
 
+  def initialize
+    @client = Instagram.client(access_token: self.class.access_token)
+  end
+
   def profile(user = 'self')
     attributes = @client.user(user)
     UserBuilder.new(attributes.dup).user
+  end
+
+  def user_images(user = 'self', options = {})
+    list = @client.user_recent_media(user, options)
+    opts = options.merge(max_id: list.pagination.next_max_id)
+
+    images = list.map { |i| ImageBuilder.new(i).image }
+    images += user_images(user, opts) if list.pagination.next_max_id.present?
+    images
   end
 
   def image(item_id)

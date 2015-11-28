@@ -31,12 +31,22 @@ RSpec.describe Insta do
     end
   end
 
+  describe '#user_images' do
+    let(:insta) { Insta.new }
+    let(:images) { insta.user_images(nil) }
+
+    it 'recursively fetches images' do
+      expect(images.count).to eq 2
+      expect(images).to all be_an Image
+    end
+  end
+
   describe '#image' do
     before do
       FactoryGirl.create(:user, example_user)
     end
     let(:insta) { Insta.new }
-    subject(:image) { insta.image(123) }
+    let(:image) { insta.image(123) }
 
     it 'returns an image' do
       expect(image).to be_an Image
@@ -56,7 +66,7 @@ RSpec.describe Insta do
 
     it 'converts the attributes correctly' do
       expect(image.tagged_users).to include a_kind_of User
-      expect(image.created_time).to be_a DateTime
+      expect(image.created_at).to be_a DateTime
     end
   end
 end
