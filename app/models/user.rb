@@ -36,6 +36,18 @@ class User
     as_json only: [:_id, :full_name, :username, :profile_picture]
   end
 
+  def season
+    aggregate_and_sort(:season).last
+  end
+
+  def time_of_day
+    aggregate_and_sort(:time_of_day).last
+  end
+
+  def favourite_colour
+    Color::RGB.by_hex(aggregate_and_sort(:primary).last).name
+  end
+
   private
 
   def me
@@ -60,5 +72,18 @@ class User
 
   def stale?
     !updated_at || updated_at < 1.day.ago
+  end
+
+  def aggregate_and_sort(key)
+    aggregate(key).sort_by(&:count).map { |hash| hash[:value] }
+  end
+
+  def aggregate(key)
+    images.group_by(&key).map do |k, v|
+      {
+        value: k,
+        count: v.count
+      }
+    end
   end
 end

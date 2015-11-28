@@ -6,7 +6,7 @@ class Palette
 
   embedded_in :image
 
-  PRIMARIES = Sinebow.new(6).to_hex
+  PRIMARIES = Sinebow.primaries
   RAINBOW = Sinebow.new(50).colours
 
   def colours

@@ -14,6 +14,10 @@ class Sinebow
     @colours.map(&:hex)
   end
 
+  def self.primaries
+    %w(ff0000 ffa500 ffff00 008000 0000ff 800080 ffc0cb a52a2a)
+  end
+
   private
 
   def get_colour(i)

@@ -38,7 +38,7 @@ module InstagramHelpers
   end
 
   def setup_user
-    stub_request(:get, %r{https://api\.instagram\.com/v1/users/[0-9a-z]+\.json\?access_token=[a-z0-9.]+})
+    stub_request(:get, %r{https://api\.instagram\.com/v1/users/[0-9a-z]+\.json\?(access_token|client_id)=[a-z0-9.]+})
       .to_return(body: instagram_user_response.to_s, status: 200)
 
     stub_request(:get, %r{https://api\.instagram\.com/v1/users/[0-9a-z]+/media/recent\.json\?(access_token|client_id)=[0-9a-z_.]+$})

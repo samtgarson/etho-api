@@ -45,6 +45,10 @@ class Image
     :night
   end
 
+  def primary
+    palette.primary
+  end
+
   private
 
   def days_into_year
