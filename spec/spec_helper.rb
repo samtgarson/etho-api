@@ -28,6 +28,8 @@ RSpec.configure do |config|
   config.include RequestHelpers
   config.extend RequestHelpers
 
+  config.order = :random
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

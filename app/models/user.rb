@@ -6,7 +6,7 @@ class User
   validates :username, presence: true, uniqueness: true
   validates :full_name, presence: true
 
-  has_many :images, dependent: :destroy
+  has_many :images, dependent: :destroy, inverse_of: :user
   has_and_belongs_to_many :tagged_images, class_name: 'Image', inverse_of: :tagged_user
 
   field :full_name, type: String
@@ -21,6 +21,7 @@ class User
   def self.verify_auth_code(code)
     user = find_or_create_by(_id: Insta.instagram_id_for(code))
     user.update_if_required
+    user
   end
 
   def new_auth_token
@@ -28,21 +29,23 @@ class User
   end
 
   def update_if_required
-    if stale?
-      update_profile
-      process_user_images
-      save!
-    end
-    self
+    update_profile if stale?
   end
 
   def basics
-    {
-      id: _id,
-      full_name: full_name,
-      username: username,
-      profile_picture: profile_picture
-    }
+    as_json only: [:_id, :full_name, :username, :profile_picture]
+  end
+
+  def season
+    aggregate_and_sort(:season).last
+  end
+
+  def time_of_day
+    aggregate_and_sort(:time_of_day).last
+  end
+
+  def favourite_colour
+    Color::RGB.by_hex(aggregate_and_sort(:primary).last).name
   end
 
   private
@@ -52,16 +55,35 @@ class User
   end
 
   def update_profile
-    Insta.new.profile(me).attributes.each do |k, v|
+    Insta.profile(me).attributes.each do |k, v|
       self[k] = v
     end
+    process_user_images
+
+    self.processed = true
+    save!
   end
 
   def process_user_images
-    # Nothing yet
+    new_images = Insta.user_images
+    images.delete_all
+    images << new_images
   end
 
   def stale?
     !updated_at || updated_at < 1.day.ago
+  end
+
+  def aggregate_and_sort(key)
+    aggregate(key).sort_by(&:count).map { |hash| hash[:value] }
+  end
+
+  def aggregate(key)
+    images.group_by(&key).map do |k, v|
+      {
+        value: k,
+        count: v.count
+      }
+    end
   end
 end

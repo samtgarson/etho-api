@@ -6,6 +6,8 @@ gem 'mongoid', '~> 5.0.0'
 gem 'rails-api'
 gem 'instagram'
 gem 'jwt'
+gem 'color'
+gem 'colorscore'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -16,8 +18,8 @@ group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'rspec_junit_formatter', '0.2.2'
-  gem 'webmock'
-  gem 'coveralls', require: false
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'rubocop'
 end
 
 group :development do
@@ -26,8 +28,9 @@ group :development do
 end
 
 group :test do
+  gem 'webmock'
+  gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 3.0'
-  gem 'factory_girl_rails', '~> 4.0'
   gem 'faker', git: 'https://github.com/stympy/faker.git'
 end
