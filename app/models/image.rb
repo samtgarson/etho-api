@@ -22,8 +22,6 @@ class Image
   field :type, type: Symbol
 
   field :urls, type: Hash
-  field :processed, type: Mongoid::Boolean, default: false
-  field :season, type: Symbol
 
   def video?
     type != :image

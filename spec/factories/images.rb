@@ -14,7 +14,5 @@ FactoryGirl.define do
     type { [:image, :video].sample }
 
     urls { { big: 'spec/fixtures/test_image.jpg', small: 'spec/fixtures/test_image.jpg' } }
-    processed false
-    season ''
   end
 end

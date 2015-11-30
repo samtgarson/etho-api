@@ -48,6 +48,12 @@ class User
     Color::RGB.by_hex(aggregate_and_sort(:primary).last).name
   end
 
+  def colours
+    count_colours.each_with_object(rainbow_hash) do |colour, counts|
+      counts[colour.first] += colour.last
+    end
+  end
+
   private
 
   def me
@@ -85,5 +91,17 @@ class User
         count: v.count
       }
     end
+  end
+
+  def rainbow_hash
+    @rainbow_hash ||= Sinebow.new(50).to_hex.each_with_object({}) { |c, o| o[c] = 0 }
+  end
+
+  def count_colours
+    all_colours.each_with_object(Hash.new(0)) { |c, counts| counts[c] += 1 }
+  end
+
+  def all_colours
+    images.map { |i| i.palette.colours }.flatten
   end
 end
