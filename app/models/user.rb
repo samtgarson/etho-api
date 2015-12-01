@@ -36,24 +36,6 @@ class User
     as_json only: [:_id, :full_name, :username, :profile_picture]
   end
 
-  def season
-    aggregate_and_sort(:season).last
-  end
-
-  def time_of_day
-    aggregate_and_sort(:time_of_day).last
-  end
-
-  def favourite_colour
-    Color::RGB.by_hex(aggregate_and_sort(:primary).last).name
-  end
-
-  def colours
-    count_colours.each_with_object(rainbow_hash) do |colour, counts|
-      counts[colour.first] += colour.last
-    end
-  end
-
   private
 
   def me
@@ -78,30 +60,5 @@ class User
 
   def stale?
     !updated_at || updated_at < 1.day.ago
-  end
-
-  def aggregate_and_sort(key)
-    aggregate(key).sort_by(&:count).map { |hash| hash[:value] }
-  end
-
-  def aggregate(key)
-    images.group_by(&key).map do |k, v|
-      {
-        value: k,
-        count: v.count
-      }
-    end
-  end
-
-  def rainbow_hash
-    @rainbow_hash ||= Sinebow.new(50).to_hex.each_with_object({}) { |c, o| o[c] = 0 }
-  end
-
-  def count_colours
-    all_colours.each_with_object(Hash.new(0)) { |c, counts| counts[c] += 1 }
-  end
-
-  def all_colours
-    images.map { |i| i.palette.colours }.flatten
   end
 end
