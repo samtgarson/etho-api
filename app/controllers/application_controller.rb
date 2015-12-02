@@ -35,14 +35,14 @@ class ApplicationController < ActionController::API
   end
 
   def authentication_timeout
-    render json: { errors: ['Authentication Timeout'] }, status: 419
+    render json: { errors: ['Authentication timed out or invalid.'] }, status: 419
   end
 
   def forbidden_resource
-    render json: { errors: ['Not Authorized To Access Resource'] }, status: :forbidden
+    render json: { errors: ['Not authorized to access resource.'] }, status: :forbidden
   end
 
   def user_not_authenticated
-    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+    render json: { errors: ['Not authenticated.'] }, status: :unauthorized
   end
 end
