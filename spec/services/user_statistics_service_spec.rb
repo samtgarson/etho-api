@@ -31,30 +31,40 @@ RSpec.describe UserStatisticsService do
   total_images = opts.inject(0) { |a, e| a + e[:count] }
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:empty_user) { FactoryGirl.create(:user) }
   let(:images) do
     opts.map do |options|
       FactoryGirl.build_list(:image, options[:count], *options[:attributes])
     end
   end
 
-  def create_service
+  def create_service(user)
     UserStatisticsService.new(user)
   end
 
-  before { user.images << images.flatten }
+  before do
+    user.images << images.flatten
+  end
 
   %i(season time_of_day favourite_colour tags).each do |method|
     describe "##{method}" do
-      let(:service) { create_service }
-      subject { service.send(method) }
+      context 'given a user with images' do
+        let(:service) { create_service(user) }
+        subject { service.send(method) }
 
-      it { is_expected.to eq results[method] }
+        it { is_expected.to eq results[method] }
+      end
+
+      context 'given a user with no images' do
+        let(:service) { create_service(empty_user) }
+        subject { service.send(method) }
+
+        it { is_expected.to be_nil }
+      end
     end
   end
 
   describe '#colours' do
-    let(:service) { create_service }
-    subject(:colours) { service.colours }
     let(:irrelevant_colours) do
       colours.reject { |h| matched_colours.include? h[:colour] }
     end
@@ -62,9 +72,21 @@ RSpec.describe UserStatisticsService do
       colours.reject { |h| matched_colours.exclude? h[:colour] }
     end
 
-    it 'only has the right colours counted' do
-      expect(irrelevant_colours).to all include count: 0
-      expect(relevant_colours).to all include count: total_images
+    context 'given a user with images' do
+      let(:service) { create_service(user) }
+      subject(:colours) { service.colours }
+
+      it 'only has the right colours counted' do
+        expect(irrelevant_colours).to all include count: 0
+        expect(relevant_colours).to all include count: total_images
+      end
+    end
+
+    context 'given a user with no images' do
+      let(:service) { create_service(empty_user) }
+      subject { service.colours }
+
+      it { is_expected.to be_nil }
     end
   end
 end
