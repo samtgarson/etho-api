@@ -1,20 +1,18 @@
 class UserStatisticsService
-  attr_accessor :user
-
   def initialize(user)
     @user = user
   end
 
   def season
-    aggregate_and_sort(:season).last
+    aggregate_and_sort(:season).last if user_has_images?
   end
 
   def time_of_day
-    aggregate_and_sort(:time_of_day).last
+    aggregate_and_sort(:time_of_day).last if user_has_images?
   end
 
   def favourite_colour
-    Color::RGB.by_hex(aggregate_and_sort(:primary).last).name
+    Color::RGB.by_hex(aggregate_and_sort(:primary).last).name if user_has_images?
   end
 
   def colours
@@ -23,7 +21,7 @@ class UserStatisticsService
         colour: k,
         count: v
       }
-    end
+    end if user_has_images?
   end
 
   def tags
@@ -31,10 +29,16 @@ class UserStatisticsService
       average: average_tags.round,
       max: tag_counts.last[:count],
       top_tags: top_tags.map { |t| { tag: t.first, count: t.last } }
-    }
+    } if user_has_images?
   end
 
   private
+
+  attr_reader :user
+
+  def user_has_images?
+    @user.images.any?
+  end
 
   def aggregate_and_sort(key)
     aggregate(key).sort_by { |h| h[:count] }.map { |hash| hash[:value] }

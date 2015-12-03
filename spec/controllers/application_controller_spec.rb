@@ -25,7 +25,7 @@ describe ApplicationController do
     context 'given an expired authentication token' do
       let(:custom_headers) { expired_authentication_headers }
       it 'raises a timeout error' do
-        expect(json['errors']).to include 'Authentication Timeout'
+        expect(json['errors']).to include 'Authentication timed out or invalid.'
         expect(response).not_to be_success
       end
     end
@@ -33,7 +33,7 @@ describe ApplicationController do
     context 'given an invalid authentication token' do
       let(:custom_headers) { invalid_authentication_headers }
       it 'raises an authentication error' do
-        expect(json['errors']).to include 'Not Authenticated'
+        expect(json['errors']).to include 'Not authenticated.'
         expect(response).not_to be_success
       end
     end

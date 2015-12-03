@@ -62,10 +62,6 @@ class ImageBuilder
     value.to_sym
   end
 
-  def find_user(value)
-    User.find(value['id'])._id
-  end
-
   def tag_users
     @attributes['users_in_photo'].each do |u|
       @image.tagged_users << User.find_or_create_by(u['user'].to_hash)

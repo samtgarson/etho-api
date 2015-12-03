@@ -23,7 +23,7 @@ RSpec.describe AuthController, type: :request do
         get '/auth/invalid_code'
 
         expect(response).not_to be_success
-        expect(json['errors']).to include('Not Authenticated')
+        expect(json['errors']).to include('Not authenticated.')
       end
     end
   end

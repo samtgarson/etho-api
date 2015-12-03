@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Insta do
-  stub_out_instagram_api
-
   describe '.instagram_id_for' do
-    subject(:output) { Insta.instagram_id_for('valid_code') }
+    stub_out_instagram_api
+
+    let!(:output) { Insta.instagram_id_for('valid_code') }
 
     it 'returns an id' do
       expect(output).to eq(example_user[:id].to_i)
@@ -17,6 +17,8 @@ RSpec.describe Insta do
   end
 
   describe '.profile' do
+    stub_out_instagram_api
+
     subject(:profile) { Insta.profile }
 
     it 'returns a user' do
@@ -31,6 +33,8 @@ RSpec.describe Insta do
   end
 
   describe '.user_images' do
+    stub_out_instagram_api
+
     let(:images) { Insta.user_images(nil) }
 
     it 'recursively fetches images' do
@@ -40,6 +44,8 @@ RSpec.describe Insta do
   end
 
   describe '.image' do
+    stub_out_instagram_api
+
     before do
       FactoryGirl.create(:user, example_user)
     end
