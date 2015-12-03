@@ -18,8 +18,8 @@ class User
   field :processed, type: Mongoid::Boolean, default: false
   field :_id
 
-  def self.verify_auth_code(code)
-    user = find_or_create_by(_id: Insta.instagram_id_for(code))
+  def self.verify_auth_code(opts)
+    user = find_or_create_by(_id: Insta.instagram_id_for(opts))
     user.update_if_required
     user
   end
