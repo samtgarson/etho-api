@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :users, only: [:show]
 
-  get 'auth/:code' => 'auth#create'
+  post 'auth' => 'auth#create'
   get 'heartbeat' => 'application#heartbeat'
 
   get '/users/:id/stats' => 'users#stats', as: :stats
