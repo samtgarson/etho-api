@@ -4,7 +4,13 @@ RSpec.describe Insta do
   describe '.instagram_id_for' do
     stub_out_instagram_api
 
-    let!(:output) { Insta.instagram_id_for('valid_code') }
+    let(:opts) do
+      {
+        code: 'valid_code',
+        redirect: '123'
+      }
+    end
+    let!(:output) { Insta.instagram_id_for(opts) }
 
     it 'returns an id' do
       expect(output).to eq(example_user[:id].to_i)

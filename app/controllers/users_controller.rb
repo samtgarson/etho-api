@@ -62,7 +62,7 @@ class UsersController < ApplicationController
   end
 
   def no_images_error
-    { 'errors': ['User has no images.'] }.to_json
+    { errors: ['User has no images.'] }.to_json
   end
 
   def set_user

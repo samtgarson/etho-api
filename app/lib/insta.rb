@@ -2,8 +2,8 @@ class Insta
   class << self
     attr_accessor :access_token
 
-    def instagram_id_for(code)
-      response = Instagram.get_access_token(code, redirect_uri: ENV['instagram_redirect'], scope: 'relationships')
+    def instagram_id_for(opts)
+      response = Instagram.get_access_token(opts[:code], redirect_uri: opts[:redirect], scope: 'relationships')
       @access_token = response['access_token']
       response['user']['id'].to_i
     end
