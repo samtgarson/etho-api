@@ -25,6 +25,14 @@ class ApplicationController < ActionController::API
     render json: { heartbeat: true }
   end
 
+  def application_error
+    render json: { errors: ['Something went wrong.'] }, status: 500
+  end
+
+  def not_found
+    render json: { errors: ['That resource cannot be found.'] }, status: 404
+  end
+
   private
 
   # Bearer somerandomstring.encoded-payload.anotherrandomstring

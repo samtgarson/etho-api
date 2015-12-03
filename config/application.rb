@@ -27,6 +27,8 @@ module EthoApi
     config.autoload_paths += %W(#{config.root}/lib)
     config.assets.enabled = false
 
+    config.exceptions_app = routes
+
     config.generators do |g|
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
       g.test_framework :rspec, controller_specs: false, routing_specs: false
