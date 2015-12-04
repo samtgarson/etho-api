@@ -4,7 +4,7 @@ module RequestHelpers
   end
 
   def mock_authorization
-    let!(:current_user) { FactoryGirl.create(:user, id: '4079668', full_name: 'Sam Garson', username: 'samtgarson') }
+    let!(:current_user) { FactoryGirl.create(:user, id: '4079668', full_name: 'Sam Garson', username: 'samtgarson', processed: true) }
 
     before do
       allow_any_instance_of(ApplicationController).to receive(:authenticate_request!).and_return(true)
