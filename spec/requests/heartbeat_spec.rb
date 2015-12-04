@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :request do
+  before do
+    set_subdomain
+  end
+
   describe 'GET /heartbeat' do
     it 'returns a pulse' do
       get heartbeat_path

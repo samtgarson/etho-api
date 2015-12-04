@@ -12,6 +12,10 @@ module RequestHelpers
     end
   end
 
+  def set_subdomain
+    host! 'api.example.com'
+  end
+
   def authentication_headers
     'Bearer ' + JsonWebToken.encode('user_id' => current_user[:_id])
   end
