@@ -33,5 +33,12 @@ module EthoApi
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
       g.test_framework :rspec, controller_specs: false, routing_specs: false
     end
+
+    config.middleware.insert_before 0, 'Rack::Cors' do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
   end
 end

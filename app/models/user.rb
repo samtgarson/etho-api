@@ -4,7 +4,6 @@ class User
 
   validates :_id, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
-  validates :full_name, presence: true
 
   has_many :images, dependent: :destroy, inverse_of: :user
   has_and_belongs_to_many :tagged_images, class_name: 'Image', inverse_of: :tagged_user
@@ -15,12 +14,12 @@ class User
   field :username, type: String
   field :website, type: String
   field :counts
-  field :processed, type: Mongoid::Boolean, default: false
   field :_id
+  field :processed, type: Mongoid::Boolean, default: false
 
   def self.verify_auth_code(opts)
     user = find_or_create_by(_id: Insta.instagram_id_for(opts))
-    user.update_if_required
+    user.update_profile_if_required
     user
   end
 
@@ -28,12 +27,16 @@ class User
     JsonWebToken.encode('user_id' => me)
   end
 
-  def update_if_required
-    update_profile if stale?
-  end
-
   def basics
     as_json only: [:_id, :full_name, :username, :profile_picture]
+  end
+
+  def update_images_if_required
+    update_images if stale? || !processed
+  end
+
+  def update_profile_if_required
+    update_profile if stale? || !processed
   end
 
   private
@@ -46,16 +49,14 @@ class User
     Insta.profile(me).attributes.each do |k, v|
       self[k] = v
     end
-    process_user_images
-
-    self.processed = true
     save!
   end
 
-  def process_user_images
+  def update_images
     new_images = Insta.user_images
     images.delete_all
     images << new_images
+    self.processed = true
   end
 
   def stale?

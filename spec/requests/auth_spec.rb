@@ -10,7 +10,7 @@ RSpec.describe AuthController, type: :request do
 
     context 'given a valid code' do
       it 'returns token for existing user' do
-        get '/auth/valid_code?redirect=123'
+        post '/auth', code: 'valid_code', redirect: '123'
 
         expect(response).to be_success
         expect(json).to have_key('token')
@@ -20,7 +20,7 @@ RSpec.describe AuthController, type: :request do
 
     context 'given an invalid code' do
       it 'returns an error' do
-        get '/auth/invalid_code?redirect=123'
+        post '/auth', code: 'invalid_code', redirect: '123'
 
         expect(response).not_to be_success
         expect(json['errors']).to include('Not authenticated.')
