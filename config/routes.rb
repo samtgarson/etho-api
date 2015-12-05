@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   constraints subdomain: 'api' do
+    get '/' => 'application#greeting', as: :api_root
+
     resources :users, only: [:show]
 
     post 'auth' => 'auth#create'
@@ -13,4 +15,6 @@ Rails.application.routes.draw do
     get '/404' => 'application#not_found', as: :not_found
     get '/500' => 'application#application_error', as: :application_error
   end
+
+  get '/' => 'home#index', as: :client_root
 end

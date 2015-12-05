@@ -3,12 +3,14 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 gem 'mongoid', '~> 5.0.0'
-gem 'rails-api'
 gem 'instagram'
 gem 'jwt'
 gem 'color'
 gem 'colorscore'
 gem 'rack-cors', require: 'rack/cors'
+gem 'sass'
+gem 'bower-rails'
+gem 'slim-rails'
 
 gem 'rails_12factor', group: :production
 
@@ -36,4 +38,6 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 3.0'
   gem 'faker', git: 'https://github.com/stympy/faker.git'
+  gem 'capybara'
+  gem 'selenium-webdriver'
 end

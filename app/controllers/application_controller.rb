@@ -5,7 +5,7 @@ end
 class AuthenticationTimeoutError < StandardError
 end
 
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
   attr_reader :current_user
 
   rescue_from AuthenticationTimeoutError, with: :authentication_timeout
@@ -19,6 +19,10 @@ class ApplicationController < ActionController::API
     raise AuthenticationTimeoutError
   rescue JWT::VerificationError, JWT::DecodeError
     raise NotAuthenticatedError
+  end
+
+  def greeting
+    render json: { etho: 'Hello, human.' }
   end
 
   def heartbeat
