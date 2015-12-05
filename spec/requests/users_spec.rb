@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :request do
+  before do
+    set_subdomain
+  end
+
   describe 'GET /user' do
     mock_authorization
 

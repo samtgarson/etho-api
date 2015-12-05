@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AuthController, type: :request do
+  before do
+    set_subdomain
+  end
+
   describe 'GET /auth' do
     stub_out_instagram_api
 
