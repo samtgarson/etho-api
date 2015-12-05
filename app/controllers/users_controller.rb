@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    if params[:id] == 'self' || [:id] == 'me'
+    if params[:id] == 'self' || params[:id] == 'me'
       @user = current_user
     else
       @user = User.find(params[:id])
