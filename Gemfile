@@ -8,14 +8,17 @@ gem 'jwt'
 gem 'color'
 gem 'colorscore'
 gem 'rack-cors', require: 'rack/cors'
-gem 'sass'
 gem 'bower-rails'
+gem 'ng-rails-csrf'
+gem 'autoprefixer-rails'
 gem 'slim-rails'
 
 gem 'rails_12factor', group: :production
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+group :assets do
+  gem 'uglifier'
+  gem 'sass-rails', '~> 5.0'
+end
 
 group :development, :test do
   gem 'pry'
