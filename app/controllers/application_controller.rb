@@ -8,6 +8,8 @@ end
 class ApplicationController < ActionController::Base
   attr_reader :current_user
 
+  protect_from_forgery
+
   rescue_from AuthenticationTimeoutError, with: :authentication_timeout
   rescue_from NotAuthenticatedError, with: :user_not_authenticated
   rescue_from AccessDeniedError, with: :forbidden_resource
@@ -23,6 +25,9 @@ class ApplicationController < ActionController::Base
 
   def greeting
     render json: { etho: 'Hello, human.' }
+  end
+
+  def index
   end
 
   def heartbeat

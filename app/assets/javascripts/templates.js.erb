@@ -1,0 +1,10 @@
+angular.module("app").run(["$templateCache", function($templateCache) {
+  <% templater = TemplateController.new; TemplateController.file_names.each do |f| %>
+    $templateCache.put('<%= f %>', <%= templater.render(f).to_json %>)
+  <% end %>
+}]);
+<%
+TemplateController.files.each do |file|
+  depend_on(file)
+end
+%>
