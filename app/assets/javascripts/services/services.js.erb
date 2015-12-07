@@ -1,0 +1,26 @@
+angular
+  .module('app')
+  .factory('Endpoint', function() {
+    return function(path) {
+      url = '<%= Rails.application.routes.url_helpers.api_root_url %>'
+      if (path.join) return url + path.join('/');
+      return url + path
+    }
+  })
+  .service('UserServuce', [
+    'Endpoint',
+    '$http',
+    '$cookies',
+    function(Endpoint, $http, $cookies){
+      return {
+        user: null,
+        get: function() {
+          if (this.user) return this.user;
+          if ($cookies.get('user')) {
+            this.user = $cookies.get('user')
+            return this.user
+          }
+          return $http.get(Endpoint('me'))
+        }
+      }
+  }])

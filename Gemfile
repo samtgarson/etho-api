@@ -42,5 +42,8 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'faker', git: 'https://github.com/stympy/faker.git'
   gem 'capybara'
+  gem 'capybara-angular'
   gem 'selenium-webdriver'
+  gem 'teaspoon-jasmine'
+  gem 'poltergeist'
 end
