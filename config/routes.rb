@@ -14,8 +14,9 @@ Rails.application.routes.draw do
 
     get '/404' => 'application#not_found', as: :not_found
     get '/500' => 'application#application_error', as: :application_error
+    get '*path' => 'application#not_found'
   end
 
-  root 'application#index', as: :client_root
+  get '/' => 'application#index', as: :client_root
   get '*path' => 'application#index'
 end

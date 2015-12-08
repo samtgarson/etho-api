@@ -1,5 +1,5 @@
 angular
   .module('app')
-  .controller('ProfileController', ['$scope', function ($scope) {
-
+  .controller('ProfileController', ['$scope', 'User', function ($scope, User) {
+    $scope.user = User;
   }]);

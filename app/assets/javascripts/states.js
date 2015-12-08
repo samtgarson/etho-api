@@ -1,4 +1,4 @@
-angular.module('states', [])
+angular.module('app')
   .config([
     '$stateProvider', '$urlRouterProvider', '$locationProvider',
     function($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -22,8 +22,8 @@ angular.module('states', [])
                     user: null
                   },
                   resolve: {
-                    User: function(UserService, $stateParams) {
-                      return $stateParams.user || UserService.getUser();
+                    User: function(User, $stateParams) {
+                      return $stateParams.user || User.get();
                     }
                   }
               });

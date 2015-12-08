@@ -7,7 +7,7 @@ angular
       return url + path
     }
   })
-  .service('UserServuce', [
+  .service('User', [
     'Endpoint',
     '$http',
     '$cookies',
@@ -17,10 +17,33 @@ angular
         get: function() {
           if (this.user) return this.user;
           if ($cookies.get('user')) {
-            this.user = $cookies.get('user')
+            this.user = $cookies.getObject('user')
             return this.user
           }
-          return $http.get(Endpoint('me'))
+          return $http.get(Endpoint(['users', 'me']))
+        },
+        set: function(u) {
+          this.user = u;
+          $cookies.putObject('user', u);
+        }
+      }
+  }])
+  .service('Token', [
+    '$cookies',
+    function($cookies){
+      return {
+        token: null,
+        get: function() {
+          if (this.token) return this.token;
+          if ($cookies.get('token')) {
+            this.token = $cookies.get('token')
+            return this.token
+          }
+          return false
+        },
+        set: function(t) {
+          this.token = t;
+          $cookies.put('token', t);
         }
       }
   }])
