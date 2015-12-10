@@ -1,5 +1,5 @@
 class JsonWebToken
-  def self.encode(payload, expiration = 24.hours.from_now)
+  def self.encode(payload, expiration = 1.week.from_now)
     payload = payload.dup
     payload['exp'] = expiration.to_datetime.to_i
     JWT.encode(payload, ENV['jwt_secret'])

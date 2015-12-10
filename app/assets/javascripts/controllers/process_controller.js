@@ -12,14 +12,22 @@ angular
 
 function processCtrl ($scope, $http, $state, $stateParams, Endpoint, User, Token) {
   var code = $stateParams.code,
-    redirectUri = location.protocol + '//' + location.host + '/process';
-  if (!code) $state.go('home');
-  $http
-    .post(
-      Endpoint('auth'),
-      {code: code, redirect: redirectUri})
+    redirectUri = location.protocol + '//' + location.host + '/process',
+    authHash = {
+      url: Endpoint('auth'),
+      data: {code: code, redirect: redirectUri},
+      method: 'POST',
+      skipAuthorization: true
+    };
+
+  makeAuthRequestOrReturn()
     .then(processAuthRequest)
-    .catch(authError);
+    .catch(processAuthError);
+
+  function makeAuthRequestOrReturn () {
+    if (!code) $state.go('home');
+    return $http(authHash);
+  }
 
   function processAuthRequest (response) {
     if (response.status == 201) {
@@ -29,7 +37,7 @@ function processCtrl ($scope, $http, $state, $stateParams, Endpoint, User, Token
     }
   }
 
-  function authError (response) {
+  function processAuthError (response) {
     $state.go('home');
   }
 }
