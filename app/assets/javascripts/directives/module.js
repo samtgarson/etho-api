@@ -1,18 +1,21 @@
 angular.module('app')
-  .directive('controller', ['$compile', 'controllerService', function($compile, controllerService){
+  .directive('moduleType', ['$compile', 'controllerService', function($compile, controllerService){
     return {
       terminal: true,
       priority: 100000,
       scope: {
-        controller: '='
+        type: '=moduleType'
       },
       restrict: 'A',
       link: function(scope, elem, attrs, controller) {
-        var ctrl = 'module.' + scope.controller;
+        var ctrl = 'module.' + scope.type;
         if (!controllerService.exists(ctrl)) ctrl = 'module.base';
-        elem.attr('ng-controller', ctrl);
-        elem.attr('klass', scope.controller);
-        elem.removeAttr('controller');
+
+        elem.attr('ng-controller', ctrl + ' as vm');
+        elem.attr('ng-class', "{'ready': vm.data}");
+        elem.attr('class', scope.type);
+        elem.removeAttr('module-type');
+
         $compile(elem)(scope);
       }
     };
@@ -20,13 +23,10 @@ angular.module('app')
 .directive('module', [function(){
   return {
     restrict: 'E',
-    templateUrl: moduleTemplate,
-    link: function($scope, iElm, iAttrs, controller) {
-
-    }
+    templateUrl: moduleTemplate
   };
 
   function moduleTemplate (el, attr) {
-    return 'modules/' + attr.klass;
+    return 'modules/' + attr.class;
   }
 }]);

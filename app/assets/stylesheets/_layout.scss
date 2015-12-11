@@ -42,7 +42,8 @@ nav {
   }
 }
 
-.module {
+.module,
+module {
   width: 100%;
   display: block;
   background-color: $w;
@@ -78,7 +79,7 @@ nav {
   }
 }
 
-.module--profile {
+module.me {
   text-align: center;
 
   img.avatar {

@@ -16,6 +16,7 @@ html lang="en" ng-app="app" ng-controller="AppController"
 
     body
         nav
-            = image_tag 'etho_white.svg', id: 'logo'
+            a ui-sref="home"
+                = image_tag'etho_white.svg', id: 'logo'
             = image_tag 'menu.svg', id: 'menu'
         == yield
