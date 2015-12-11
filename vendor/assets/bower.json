@@ -5,6 +5,7 @@
     "angular-ui-router": "latest",
     "angular-cookies": "latest",
     "angular-jwt": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "class.js": "latest"
   }
 }

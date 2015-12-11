@@ -4,6 +4,7 @@
 //= require angular-jwt
 //= require moment
 //= require ng-rails-csrf
+//= require class.js/src/class
 //= require_self
 //= require_tree .
 
