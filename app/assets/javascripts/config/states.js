@@ -6,7 +6,7 @@ angular.module('app')
       $stateProvider
               .state('home', {
                   url: '/',
-                  templateUrl: 'client/home',
+                  templateUrl: 'views/home',
                   controller: 'HomeController'
               })
               .state('processing', {
@@ -16,8 +16,9 @@ angular.module('app')
               })
               .state('profile', {
                   url: '/profile',
-                  templateUrl: 'client/profile',
+                  templateUrl: 'views/profile',
                   controller: 'ProfileController',
+                  controllAs: 'vm',
                   params: {
                     user: null
                   },
