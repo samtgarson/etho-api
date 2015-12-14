@@ -16,8 +16,8 @@ h5, .h5 { font-size: 130%; font-weight: 300; line-height: calc(130% * 1.2); disp
   margin: 0;
 }
 
-@mixin alt-font() {
-    
+@mixin secondary {
+  font: bold 32px/1 "Blanch"
 }
 
 body {

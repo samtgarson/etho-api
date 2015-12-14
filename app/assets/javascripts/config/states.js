@@ -11,7 +11,7 @@ angular.module('app')
               })
               .state('processing', {
                   url: '/process?code',
-                  template: '',
+                  templateUrl: 'views/process',
                   controller: 'ProcessController'
               })
               .state('profile', {

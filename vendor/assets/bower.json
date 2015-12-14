@@ -6,6 +6,7 @@
     "angular-cookies": "latest",
     "angular-jwt": "latest",
     "moment": "latest",
-    "class.js": "latest"
+    "class.js": "latest",
+    "angular-animate": "latest"
   }
 }

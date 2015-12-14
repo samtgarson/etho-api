@@ -33,8 +33,18 @@ nav {
 .module-wrapper {
   max-width: 450px;
   width: 100%;
-  margin: 30vh auto 0;
+  margin: 20vh auto 0;
   padding-bottom: 30vh;
+
+  @include reveal-to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @include reveal-from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 
   @include small {
     padding-top: 0;
@@ -77,6 +87,14 @@ module {
   .module__half--dark {
     background-color: rgba(red, .1);
   }
+}
+
+.module.loading {
+  background: $yellow asset-url('default_module.png') no-repeat center center;
+  background-size: cover;
+  background-blend-mode: soft-light;
+  text-align: center;
+  @include secondary;
 }
 
 module.me {
