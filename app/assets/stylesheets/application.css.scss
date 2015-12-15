@@ -1,10 +1,7 @@
 @import 'variables';
 
-@import 'brand/colours';
-@import 'brand/typo';
-@import 'brand/animation';
-
-@import 'ui/buttons';
-@import 'ui/loader';
+@import "brand/*";
+@import "ui/*";
 
 @import 'layout';
+@import "modules/*";

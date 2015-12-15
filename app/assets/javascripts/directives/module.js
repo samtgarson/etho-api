@@ -4,7 +4,8 @@ angular.module('app')
       terminal: true,
       priority: 100000,
       scope: {
-        type: '=moduleType'
+        type: '=moduleType',
+        opts: '='
       },
       restrict: 'A',
       link: function(scope, elem, attrs, controller) {
@@ -12,7 +13,7 @@ angular.module('app')
         if (!controllerService.exists(ctrl)) ctrl = 'module.base';
 
         elem.attr('ng-controller', ctrl + ' as vm');
-        elem.attr('ng-class', "{'ready': vm.data}");
+        elem.attr('ng-show', "vm.data");
         elem.attr('class', scope.type);
         elem.removeAttr('module-type');
 

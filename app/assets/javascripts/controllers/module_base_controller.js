@@ -3,6 +3,7 @@ var moduleBaseController = new Class({
     this.$http = $http;
     this.endpoint = Endpoint;
     this.type = $scope.$parent.type;
+    this.opts = $scope.$parent.opts;
     this.user = User;
 
     this.getData();

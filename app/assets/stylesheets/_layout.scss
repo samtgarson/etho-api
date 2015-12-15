@@ -58,6 +58,7 @@ module {
   display: block;
   background-color: $w;
   box-sizing: border-box;
+  position: relative;
 
   .module__half {
     padding: 60px;
@@ -74,40 +75,3 @@ module {
     padding: 60px;
   }
 }
-
-.module--home {
-  background: $yellow asset-url('default_module.png') no-repeat center center;
-  background-size: cover;
-  background-blend-mode: soft-light;
-
-  p {
-    font-weight: 500;
-  }
-
-  .module__half--dark {
-    background-color: rgba(red, .1);
-  }
-}
-
-.module.loading {
-  background: $yellow asset-url('default_module.png') no-repeat center center;
-  background-size: cover;
-  background-blend-mode: soft-light;
-  text-align: center;
-  @include secondary;
-}
-
-module.me {
-  text-align: center;
-
-  img.avatar {
-    border-radius: 100px;
-    margin: 30px auto;
-  }
-
-  p {
-    margin: 10px auto 30px;
-  }
-}
-
-
