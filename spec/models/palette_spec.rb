@@ -24,11 +24,4 @@ RSpec.describe Palette, type: :model do
       end
     end
   end
-
-  describe '#colours' do
-    let(:palette) { FactoryGirl.build(:palette) }
-    subject { palette.colours }
-
-    it { is_expected.to include a_kind_of String }
-  end
 end

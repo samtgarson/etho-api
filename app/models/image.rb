@@ -2,8 +2,6 @@ class Image
   include Mongoid::Document
   include Mongoid::Timestamps::Updated
 
-  before_create :process_colours
-
   validates :_id, presence: true, uniqueness: true
 
   belongs_to :user
@@ -18,10 +16,15 @@ class Image
   field :likes, type: Integer
   field :link
   field :caption
-  field :_id
+  field :_id, type: String
   field :type, type: Symbol
 
   field :urls, type: Hash
+
+  scope :processed, -> { where(:palette.ne => nil) }
+  scope :unprocessed, -> { where(palette: nil) }
+
+  delegate :primary, to: :palette
 
   def video?
     type != :image
@@ -41,10 +44,6 @@ class Image
   def time_of_day
     return :day if created_at >= morning && created_at < evening
     :night
-  end
-
-  def primary
-    palette.primary
   end
 
   private

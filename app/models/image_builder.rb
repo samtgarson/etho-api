@@ -75,4 +75,10 @@ class ImageBuilder
   def comments(value)
     value['count'].to_i
   end
+
+  def adjusted_user(user)
+    user.to_hash.tap do |u|
+      u['_id'] = u.delete 'id'
+    end
+  end
 end
