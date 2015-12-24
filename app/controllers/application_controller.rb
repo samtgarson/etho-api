@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
   def authenticate_request!
     fail NotAuthenticatedError unless http_auth_token_present?
     @current_user = JsonWebToken.user_from(@http_auth_token)
+    Insta.access_token = @current_user.token
+
   rescue JWT::ExpiredSignature
     raise AuthenticationTimeoutError
   rescue JWT::VerificationError, JWT::DecodeError

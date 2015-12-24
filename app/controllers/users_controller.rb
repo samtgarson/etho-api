@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_request!
   before_action :set_user
-  before_action :update_user, except: :show
   before_action :create_service, except: :show
 
   def show
@@ -72,10 +71,6 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
-  end
-
-  def update_user
-    @user.update_images_if_required
   end
 
   def create_service

@@ -13,8 +13,8 @@ RSpec.describe Insta do
     let!(:output) { Insta.instagram_id_for(opts) }
 
     it 'returns an id' do
-      expect(output).to eq(example_user[:id].to_i)
-      expect(output).to be_an Integer
+      expect(output).to eq(example_user[:id])
+      expect(output).to be_a String
     end
 
     it 'assigns the access token' do
@@ -33,7 +33,7 @@ RSpec.describe Insta do
     end
 
     it 'has the correct attributes' do
-      expect(profile[:_id]).to eq example_user[:id].to_i
+      expect(profile[:_id]).to eq example_user[:id]
       expect(profile[:full_name]).to eq example_user[:full_name]
     end
   end
