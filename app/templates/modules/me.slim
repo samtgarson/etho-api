@@ -1,0 +1,6 @@
+.module__whole
+  img.me__avatar ng-src="{{vm.data.profile_picture}}"
+  h5 {{vm.data.full_name}}
+  - %w(instagram facebook twitter).each do |s|
+    = image_tag "ico/#{s}", class: "me__social #{'disabled' unless s == 'instagram'}"
+module-title

@@ -1,6 +1,6 @@
 angular.module("app").run(["$templateCache", function($templateCache) {
   <% templater = TemplateController.new; TemplateController.file_names.each do |f| %>
-    $templateCache.put('<%= f %>', <%= templater.render(f).to_json %>)
+    $templateCache.put('<%= f %>', <%= templater.render(template: f).to_json %>)
   <% end %>
 }]);
 <%

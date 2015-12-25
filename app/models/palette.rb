@@ -6,62 +6,65 @@ class Palette
 
   embedded_in :image
 
-  PRIMARIES = Sinebow.primaries
+  PRIMARIES = Sinebow.primary_hex.map { |c| Color::RGB.by_hex c }
   RAINBOW = Sinebow.new(50).colours
-
-  def colours
-    scores.map { |s| s[:hex] }
-  end
 
   class << self
     def new_from_url(url)
       @url = url
-      Palette.new(scores: find_palette, primary: find_primary)
+      @histogram = nil
+      Palette.new(
+        scores: merged_palette.sort_by { |s| s[:score] }.reverse,
+        primary: find_primary)
     end
 
     private
 
     def find_primary
-      primaries_palette.scores(histogram, 1).first.last.hex
+      histogram.first.last.closest_match(PRIMARIES).hex
     end
 
-    def find_palette
-      histogram.map do |c|
-        palette_match(c)
-          .sort_by { |match| match[:score] }
-          .reverse
-          .first
-      end
-    end
-
-    def primaries_palette
-      Colorscore::Palette.from_hex(PRIMARIES)
-    end
-
-    def histogram
-      @histogram ||= Colorscore::Histogram.new(@url, 4).scores
-    end
-
-    def palette_match(col)
-      RAINBOW.map do |palette_color|
-        score = 0
-        color_score, color = *col
-        score += color_score * distance_penalty(palette_color, adjusted_color(color))
-
+    def merged_palette
+      filtered_palette
+        .group_by { |s| s[:hex] }
+        .map do |h, s|
         {
-          score: score,
-          hex: palette_color.hex
+          hex: h,
+          score: s.inject(0) { |a, e| a + e[:score] }
         }
       end
     end
 
-    def adjusted_color(color)
-      color.to_hsl.tap { |c| c.s = 0.05 + c.s * (4 - c.l * 2.5) }.to_rgb
+    def filtered_palette
+      find_palette
+        .delete_if { |s| s[:score] == 0 }
     end
 
-    def distance_penalty(col1, col2)
-      distance = Colorscore::Metrics.distance(col1, col2)
-      (1 - distance)**4
+    def find_palette
+      histogram.map { |c| palette_match(c) }
+    end
+
+    def histogram
+      @histogram ||= Colorscore::Histogram.new(@url, 16).scores
+    end
+
+    def palette_match(col)
+      score, color = *col
+      new_color = color.closest_match(RAINBOW)
+      distance = delta(color, new_color)
+
+      {
+        score: normalize(score, distance).to_i,
+        hex: new_color.hex
+      }
+    end
+
+    def delta(col1, col2)
+      col1.delta_e94(col1.to_lab, col2.to_lab)
+    end
+
+    def normalize(score, distance)
+      (2 / distance) * score * 400
     end
   end
 end

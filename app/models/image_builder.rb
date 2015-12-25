@@ -22,7 +22,7 @@ class ImageBuilder
 
   def completed_hash
     transformed_hash.tap do |h|
-      h[:_id] = h[:id]
+      h[:_id] = h[:id].to_s
       h[:urls] = h[:images]
       h[:user_id] = h[:user]['id']
       h[:created_at] = h[:created_time]
@@ -64,7 +64,7 @@ class ImageBuilder
 
   def tag_users
     @attributes['users_in_photo'].each do |u|
-      @image.tagged_users << User.find_or_create_by(u['user'].to_hash)
+      @image.tagged_users << User.find_or_create_by(adjusted_user(u['user']))
     end
   end
 
@@ -74,5 +74,11 @@ class ImageBuilder
 
   def comments(value)
     value['count'].to_i
+  end
+
+  def adjusted_user(user)
+    user.to_hash.tap do |u|
+      u['_id'] = u.delete 'id'
+    end
   end
 end

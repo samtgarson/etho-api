@@ -25,10 +25,22 @@ RSpec.describe Image, type: :model do
         .and_return(FactoryGirl.build(:palette))
     end
 
-    let(:image) { FactoryGirl.build(:image) }
-    it 'creates a new palette after save' do
-      image.save
-      expect(image.palette).to be_a Palette
+    let(:new_image) { FactoryGirl.build(:image) }
+    let(:old_image) { FactoryGirl.build(:image, :processed) }
+
+    context 'for a new image' do
+      it 'creates a new palette' do
+        expect(Palette).to receive :new_from_url
+        new_image.process_colours
+        expect(new_image.palette).to be_a Palette
+      end
+    end
+    context 'for an image which has a colour' do
+      it 'returns the existing palette' do
+        expect(Palette).not_to receive :new_from_url
+        old_image.process_colours
+        expect(old_image.palette).to eq old_image.palette
+      end
     end
   end
 

@@ -4,6 +4,8 @@
 //= require angular-jwt
 //= require moment
 //= require ng-rails-csrf
+//= require angular-animate
+//= require class.js/src/class
 //= require_self
 //= require_tree .
 
@@ -12,7 +14,8 @@ angular
     'ui.router',
     'ng-rails-csrf',
     'ngCookies',
-    'angular-jwt'
+    'angular-jwt',
+    'ngAnimate'
   ])
   .controller('AppController', ['$scope', '$filter', function($scope, $filter) {
     $scope.title = "Etho";

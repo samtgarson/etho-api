@@ -1,0 +1,36 @@
+svg.loader {
+  margin: 30px;
+
+  rect {
+      fill: transparent;
+      stroke: black;
+      stroke-width: 9px;
+      stroke-dasharray: 20 40;
+      animation: dash 20s linear infinite;
+      stroke-dashoffset: 1000;
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+module-loader {
+  text-align: center;
+  @include secondary;
+
+  .ready & {
+    display: none;
+  }
+
+  .ready & ~ div {
+    display: block;
+  }
+
+  & ~ * {
+    display: none;
+  }
+}

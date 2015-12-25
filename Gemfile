@@ -12,13 +12,9 @@ gem 'bower-rails'
 gem 'ng-rails-csrf'
 gem 'autoprefixer-rails'
 gem 'slim-rails'
-
+gem 'uglifier'
+gem 'sass-rails', '~> 5.0'
 gem 'rails_12factor', group: :production
-
-group :assets do
-  gem 'uglifier'
-  gem 'sass-rails', '~> 5.0'
-end
 
 group :development, :test do
   gem 'pry'
@@ -33,6 +29,7 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  gem 'quiet_assets'
 end
 
 group :test do
