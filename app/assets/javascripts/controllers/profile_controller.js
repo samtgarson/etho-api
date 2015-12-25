@@ -5,9 +5,10 @@ angular
     $scope.modules = [
       {
         type: 'me',
-        opts: {
-          title: 'Profile'
-        }
+        title: 'Profile'
+      },
+      {
+        type: 'stats.colours'
       }
     ];
   }]);

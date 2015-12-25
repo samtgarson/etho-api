@@ -18,7 +18,7 @@ class TemplateController < AbstractController::Base
 
   class << self
     def files
-      @files ||= Dir[Rails.root.join('app', 'templates', '*', '**', '**')]
+      @files ||= Dir[Rails.root.join('app', 'templates', '**', '*')]
     end
 
     def non_partials
@@ -27,9 +27,9 @@ class TemplateController < AbstractController::Base
 
     def file_names
       non_partials
-        .map do |file|
+        .each_with_object([]) do |file, names|
           next unless (m = file.match %r{#{prefix}\/(.+).(haml|slim)})
-          m[1]
+          names << m[1]
         end
     end
 

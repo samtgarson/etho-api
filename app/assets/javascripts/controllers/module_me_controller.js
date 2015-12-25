@@ -1,4 +1,5 @@
-var moduleMeController = moduleBaseController.extend({
+var moduleMeController = new Class(moduleBaseController);
+moduleMeController.extend({
   getData: function () {
     this.data = this.user.get();
   }

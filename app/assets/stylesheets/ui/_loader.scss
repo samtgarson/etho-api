@@ -16,3 +16,21 @@ svg.loader {
     stroke-dashoffset: 0;
   }
 }
+
+
+module-loader {
+  text-align: center;
+  @include secondary;
+
+  .ready & {
+    display: none;
+  }
+
+  .ready & ~ div {
+    display: block;
+  }
+
+  & ~ * {
+    display: none;
+  }
+}

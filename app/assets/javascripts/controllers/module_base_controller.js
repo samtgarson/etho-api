@@ -3,10 +3,15 @@ var moduleBaseController = new Class({
     this.$http = $http;
     this.endpoint = Endpoint;
     this.type = $scope.$parent.type;
-    this.opts = $scope.$parent.opts;
+    this.title = $scope.$parent.title || this.title();
     this.user = User;
+    this.index = $scope.$parent.index;
 
     this.getData();
+  },
+  title: function () {
+    var words = this.type.split('.');
+    return words[words.length - 1];
   },
   getData: function () {
     var vm = this;

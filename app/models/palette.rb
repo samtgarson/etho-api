@@ -44,10 +44,6 @@ class Palette
       histogram.map { |c| palette_match(c) }
     end
 
-    def primaries_palette
-      Colorscore::Palette.from_hex(PRIMARIES)
-    end
-
     def histogram
       @histogram ||= Colorscore::Histogram.new(@url, 16).scores
     end
@@ -69,10 +65,6 @@ class Palette
 
     def normalize(score, distance)
       (2 / distance) * score * 400
-    end
-
-    def adjusted_color(color)
-      color.to_hsl.tap { |c| c.s = 0.05 + c.s * (4 - c.l * 2.5) }.to_rgb
     end
   end
 end

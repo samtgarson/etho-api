@@ -22,4 +22,8 @@ module-title {
       text-align: left;
     }
   }
+
+  @media (max-width: 600px) {
+    left: 50px;
+  }
 }

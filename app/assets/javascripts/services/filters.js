@@ -10,6 +10,7 @@ angular
   })
   .filter('withIndex', function () {
     return function(h, i) {
+      if (!h) return i;
       return angular.extend(h, {
         index: i
       });
