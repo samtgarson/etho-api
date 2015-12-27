@@ -14,6 +14,7 @@ gem 'autoprefixer-rails'
 gem 'slim-rails'
 gem 'uglifier'
 gem 'sass-rails', '~> 5.0'
+gem 'puma'
 
 
 gem 'rails_12factor', group: :production
