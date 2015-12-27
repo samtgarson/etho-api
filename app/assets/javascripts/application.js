@@ -6,6 +6,10 @@
 //= require ng-rails-csrf
 //= require angular-animate
 //= require class.js/src/class
+//= require jquery
+//= require velocity
+//= require jquery.event.swipe
+//= require unslider
 //= require_self
 //= require_tree .
 
