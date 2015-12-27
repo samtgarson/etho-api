@@ -14,6 +14,8 @@ gem 'autoprefixer-rails'
 gem 'slim-rails'
 gem 'uglifier'
 gem 'sass-rails', '~> 5.0'
+
+
 gem 'rails_12factor', group: :production
 
 group :development, :test do
@@ -41,6 +43,5 @@ group :test do
   gem 'capybara'
   gem 'capybara-angular'
   gem 'selenium-webdriver'
-  gem 'teaspoon-jasmine'
   gem 'poltergeist'
 end
