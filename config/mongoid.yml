@@ -6,6 +6,7 @@ production:
         consistency: :strong
         max_retries: 1
         retry_interval: 0
+        max_pool_size:  <%= ENV['MAX_THREADS'] || 5 %>
 development:
   clients:
     default:

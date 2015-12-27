@@ -1,5 +1,5 @@
 class UserStatisticsService
-  SAMPLE_SIZE = 85
+  SAMPLE_SIZE = 65
 
   def initialize(user)
     @user = user

@@ -50,7 +50,7 @@ class ImageBuilder
   def images(value)
     {
       big: value['standard_resolution']['url'],
-      small: value['low_resolution']['url']
+      small: value['thumbnail']['url']
     }
   end
 
