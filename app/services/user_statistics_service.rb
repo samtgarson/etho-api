@@ -30,7 +30,7 @@ class UserStatisticsService
     {
       average: average_tags.round,
       max: tag_counts.last[:count],
-      top_tags: top_tags.map { |t| { tag: t.first, count: t.last } }
+      top_tags: top_tags.reverse.map { |t| { tag: t.first, count: t.last } }
     } if user_has_images?
   end
 

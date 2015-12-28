@@ -1,0 +1,56 @@
+nav.unslider-nav {
+  ol li {
+    background-color: rgba(black, 0.3);
+    border-radius: 0;
+    transition: .15s all ease;
+
+    &.active {
+      background-color: black;
+    }
+  }
+}
+
+.unslider {
+  overflow: visible !important;
+  position: relative;
+  margin-bottom: -60px;
+
+  @include small {
+    margin-bottom: -20px;
+  }
+}
+
+.unslider-arrow {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  font-size: 0;
+  left: auto;
+  right: auto;
+
+  &.prev {
+    right: 50%;
+  }
+
+  &.next {
+    left: 50%;
+  }
+
+  @include small {
+    display: none;
+  }
+}
+
+module-slider {
+  overflow: visible;
+
+  li.slide {
+    opacity: 0;
+    transition: 0.25s opacity ease;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+}

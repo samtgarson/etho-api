@@ -1,0 +1,19 @@
+module-loader
+.module__half ng-if="vm.data"
+  module-slider
+    li.slide
+      ol
+        li ng-repeat="tag in vm.data.top_tags | limitTo: 2"
+          div data-fittext="" data-fittext-load-delay="100" {{'#' + tag.tag}}
+    li.slide
+      ol
+        li ng-repeat="tag in vm.data.top_tags | limitTo: 10 : 2"
+          div {{'#' + tag.tag}}
+.module__half
+  .module__row
+    h1 {{vm.data.average}}
+    h2 avg hashtags per post
+  .module__row
+    h1 {{vm.data.max}}
+    h2 most hashtags
+module-title

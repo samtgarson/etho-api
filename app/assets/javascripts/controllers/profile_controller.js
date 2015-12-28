@@ -7,8 +7,7 @@ angular
         type: 'me',
         title: 'Profile'
       },
-      {
-        type: 'stats.colours'
-      }
+      {type: 'stats.tags'},
+      {type: 'stats.colours'}
     ];
   }]);

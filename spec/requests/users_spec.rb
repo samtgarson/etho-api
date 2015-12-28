@@ -82,8 +82,12 @@ RSpec.describe UsersController, type: :request do
         it 'returns the correct statistics' do
           get current_path
           expect(response).to be_success
-          expect(json.keys).to match_array methods[method]
-          expect(json.values).to all eq result
+          begin
+            expect(json.keys).to match_array methods[method]
+            expect(json.values).to all eq result
+          rescue JSON::ParserError
+            expect(response.body).to match result
+          end
         end
       end
     end

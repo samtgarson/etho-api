@@ -1,0 +1,62 @@
+module.stats_tags {
+
+  li.slide {
+    &:first-child {
+      counter-reset: main-tag-counter;
+
+      ol {
+        li {
+          float: none;
+          font-weight: 600;
+          padding: 14px 0;
+          position: relative;
+          margin-left: 40px;
+
+          &::before {
+            @include secondary;
+            position: absolute;
+            left: -40px;
+            opacity: 0.4;
+            vertical-align: middle;
+            font-size: 40px;
+            content: counter(main-tag-counter);
+            counter-increment: main-tag-counter;
+          }
+        }
+      }
+    }
+
+    &:last-child {
+
+    }
+  }
+
+  .module__row {
+    text-align: center;
+    padding: 20px 0;
+
+    h1, h2 {
+      vertical-align: middle;
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 80px;
+
+      @include small {
+        display: block;
+      }
+    }
+
+    h2 {
+      @include secondary;
+      opacity: 0.5;
+      @include small {
+        font-size: 24px;
+      }
+    }
+  }
+}

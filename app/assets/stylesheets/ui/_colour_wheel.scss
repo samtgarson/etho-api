@@ -28,7 +28,7 @@ colour-wheel {
         transform: rotate(#{$i * 7.2}deg);
 
         &:hover {
-          transform: rotate(#{$i * 7.2}deg) scaleY(1.1);
+          transform: rotate(165.6deg) scale(0.8, 1);
         }
 
         @media (max-width: 400px) {

@@ -8,10 +8,10 @@ RSpec.describe UserStatisticsService do
       average: 2,
       max: 60,
       top_tags: [
-        { tag: 'uncommon_tag', count: 20 },
-        { tag: 'another_uncommon_tag', count: 40 },
+        { tag: 'common_tag', count: 400 },
         { tag: 'another_common_tag', count: 200 },
-        { tag: 'common_tag', count: 400 }
+        { tag: 'another_uncommon_tag', count: 40 },
+        { tag: 'uncommon_tag', count: 20 }
       ]
     }
   }
