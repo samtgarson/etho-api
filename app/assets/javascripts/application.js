@@ -10,6 +10,7 @@
 //= require velocity
 //= require jquery.event.swipe
 //= require unslider
+//= require ngFitText
 //= require_self
 //= require_tree .
 
@@ -19,7 +20,8 @@ angular
     'ng-rails-csrf',
     'ngCookies',
     'angular-jwt',
-    'ngAnimate'
+    'ngAnimate',
+    'ngFitText'
   ])
   .controller('AppController', ['$scope', '$filter', function($scope, $filter) {
     $scope.title = "Etho";

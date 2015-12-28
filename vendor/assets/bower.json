@@ -11,6 +11,10 @@
     "jquery": "latest",
     "velocity": "latest",
     "jquery.event.swipe": "latest",
-    "unslider": "latest"
+    "unslider": "latest",
+    "ngFitText": "latest"
+  },
+  "resolutions": {
+    "angular": "1.4.8"
   }
 }
