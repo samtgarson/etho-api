@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 
   def tags
     if (tags = @service.tags)
-      render json: { tags: tags }.to_json
+      render json: tags.to_json
       return
     end
     render json: no_images_error
