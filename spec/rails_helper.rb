@@ -5,16 +5,22 @@ require File.expand_path('../../config/environment', __FILE__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+require 'capybara/rails'
 
 require 'support/instagram_helpers'
 require 'support/request_helpers'
 require 'webmock/rspec'
+require 'capybara/poltergeist'
+
+WebMock.disable_net_connect!(allow_localhost: true)
+Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
   config.extend InstagramHelpers
   config.include InstagramHelpers
   config.include RequestHelpers
   config.extend RequestHelpers
+
   config.infer_spec_type_from_file_location!
 
   config.order = :random

@@ -1,0 +1,20 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "angular": "latest",
+    "angular-ui-router": "latest",
+    "angular-cookies": "latest",
+    "angular-jwt": "latest",
+    "moment": "latest",
+    "class.js": "latest",
+    "angular-animate": "latest",
+    "jquery": "latest",
+    "velocity": "latest",
+    "jquery.event.swipe": "latest",
+    "unslider": "latest",
+    "ngFitText": "latest"
+  },
+  "resolutions": {
+    "angular": "1.4.8"
+  }
+}

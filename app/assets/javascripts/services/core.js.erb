@@ -1,0 +1,81 @@
+angular
+  .module('app')
+  .factory('Endpoint', function() {
+    return function(path) {
+      url = '<%= Rails.application.routes.url_helpers.api_root_url %>';
+      if (path.join) return url + path.join('/');
+      return url + path;
+    };
+  })
+  .service('User', [
+    'Endpoint',
+    '$http',
+    '$cookies',
+    function(Endpoint, $http, $cookies){
+      return {
+        user: null,
+        get: function() {
+          if (this.user) return this.user;
+          if ($cookies.get('user')) return userFromCookies();
+          return userFromApi();
+        },
+        set: function(u) {
+          this.user = u;
+          $cookies.putObject('user', u);
+        }
+      };
+
+      function userFromCookies () {
+        this.user = $cookies.getObject('user');
+        return this.user;
+      }
+
+      function userFromApi () {
+        return $http.get(Endpoint(['users', 'me'])).then(function(response) {
+          $cookies.putObject('user', response.data);
+          return response.data;
+        });
+      }
+  }])
+  .factory('Token', [
+    '$cookies',
+    '$http',
+    function($cookies, $http) {
+      var tokenHash = null;
+
+      service = {
+        get: function() {
+          if (tokenHash) return tokenHash.token;
+          if ($cookies.getObject('token')) { refreshIfNecessary(); return tokenFromCookies(); }
+          return false;
+        },
+        set: function(t) {
+          tokenHash = newTokenHash(t);
+          $cookies.putObject('token', tokenHash);
+        },
+        refresh: function () {
+          // Refresh the token
+          console.log('refreshing');
+        }
+      };
+
+      function newTokenHash(t) {
+        return {
+          token: t,
+          updatedAt: Date.now()
+        };
+      }
+
+      function tokenFromCookies () {
+        tokenHash = $cookies.getObject('token');
+        return tokenHash.token;
+      }
+
+      function refreshIfNecessary () {
+        if (!tokenHash) return false;
+        var aDayAgo = moment().subtract(2, 'hours');
+        if (moment(tokenHash.updatedAt).isBefore(aDayAgo)) service.refresh();
+      }
+
+      return service;
+  }]);

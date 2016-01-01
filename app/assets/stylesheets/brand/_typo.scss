@@ -1,0 +1,24 @@
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
+  margin: 0;
+}
+
+@mixin secondary {
+  font: bold 32px/1 "Blanch"
+}
+
+body {
+  font: normal normal 300 30px/150% 'Campton', Helvetica, sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

@@ -12,4 +12,12 @@ RSpec.describe ApplicationController, type: :request do
       expect(json['heartbeat']).to be_truthy
     end
   end
+
+  describe 'GET /' do
+    it 'returns a greeting' do
+      get api_root_path
+      expect(response).to have_http_status(200)
+      expect(json['etho']).to eq 'Hello, human.'
+    end
+  end
 end

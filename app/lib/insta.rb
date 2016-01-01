@@ -2,10 +2,14 @@ class Insta
   class << self
     attr_accessor :access_token
 
+    def auth_url_for(redirect)
+      Instagram.authorize_url(redirect_uri: redirect)
+    end
+
     def instagram_id_for(opts)
       response = Instagram.get_access_token(opts[:code], redirect_uri: opts[:redirect], scope: 'relationships')
       @access_token = response['access_token']
-      response['user']['id'].to_i
+      response['user']['id'].to_s
     end
 
     def client

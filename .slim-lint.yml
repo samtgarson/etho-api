@@ -1,0 +1,6 @@
+Rubocop:
+  inherit_from: .rubocop.yml
+
+linters:
+  LineLength:
+    enabled: false

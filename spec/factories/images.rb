@@ -30,5 +30,9 @@ FactoryGirl.define do
     trait :not_many_tags do
       tags Array.new(4) { 'uncommon_tag' } + Array.new(8) { 'another_uncommon_tag' }
     end
+
+    trait :processed do
+      palette { FactoryGirl.build :palette }
+    end
   end
 end

@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_request!
   before_action :set_user
-  before_action :update_user, except: :show
   before_action :create_service, except: :show
 
   def show
@@ -44,7 +43,7 @@ class UsersController < ApplicationController
 
   def tags
     if (tags = @service.tags)
-      render json: { tags: tags }.to_json
+      render json: tags.to_json
       return
     end
     render json: no_images_error
@@ -72,10 +71,6 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
-  end
-
-  def update_user
-    @user.update_images_if_required
   end
 
   def create_service

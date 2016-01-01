@@ -1,4 +1,6 @@
 class UserStatisticsService
+  SAMPLE_SIZE = 85
+
   def initialize(user)
     @user = user
   end
@@ -12,7 +14,7 @@ class UserStatisticsService
   end
 
   def favourite_colour
-    Color::RGB.by_hex(aggregate_and_sort(:primary).last).name if user_has_images?
+    Color::RGB.by_hex(aggregate_and_sort(:primary, :processed).last).name if user_has_images?
   end
 
   def colours
@@ -28,7 +30,7 @@ class UserStatisticsService
     {
       average: average_tags.round,
       max: tag_counts.last[:count],
-      top_tags: top_tags.map { |t| { tag: t.first, count: t.last } }
+      top_tags: top_tags.reverse.map { |t| { tag: t.first, count: t.last } }
     } if user_has_images?
   end
 
@@ -40,12 +42,14 @@ class UserStatisticsService
     @user.images.any?
   end
 
-  def aggregate_and_sort(key)
-    aggregate(key).sort_by { |h| h[:count] }.map { |hash| hash[:value] }
+  def aggregate_and_sort(key, scope = nil)
+    aggregate(key, scope).sort_by { |h| h[:count] }.map { |hash| hash[:value] }
   end
 
-  def aggregate(key)
-    user.images.group_by(&key).map do |k, v|
+  def aggregate(key, scope = nil)
+    set = user.images
+    set = set.send(scope) if scope
+    set.group_by(&key).map do |k, v|
       {
         value: k,
         count: v.count
@@ -58,13 +62,13 @@ class UserStatisticsService
   end
 
   def colours_hash
-    count_colours_occurence.each_with_object(rainbow_hash) do |colour, counts|
-      counts[colour.first] += colour.last
+    count_colours_occurence.each_with_object(rainbow_hash) do |(hex, score), counts|
+      counts[hex] += score
     end
   end
 
-  def top_tags
-    count_tag_occurence[-5, 5] || count_tag_occurence
+  def top_tags(num = 5)
+    count_tag_occurence[-num, num] || count_tag_occurence
   end
 
   def average_tags
@@ -77,21 +81,35 @@ class UserStatisticsService
                     .sort_by { |_k, v| v }.sort_by { |h| h[:count] }
   end
 
-  def count_colours_occurence
-    @colour_occurence ||= all_colours.each_with_object(Hash.new(0)) { |c, counts| counts[c] += 1 }
-  end
-
   def count_tag_occurence
     @tag_occurence ||= all_tags
                        .each_with_object(Hash.new(0)) { |t, counts| counts[t] += 1 }
                        .sort_by(&:last)
   end
 
-  def all_colours
-    @all_colours ||= user.images.map { |i| i.palette.colours }.flatten
-  end
-
   def all_tags
     @all_tags ||= user.images.map(&:tags).flatten
+  end
+
+  def count_colours_occurence
+    @colour_occurence ||= all_colours
+                          .group_by { |s| s[:hex] }
+                          .each_with_object(Hash.new(0)) do |(hex, scores), hash|
+                            hash[hex] += sum_of_scores(scores)
+                          end
+  end
+
+  def sum_of_scores(scores)
+    scores.inject(0) { |a, e| a + e[:score] }
+  end
+
+  def all_colours
+    @all_colours ||= processed_images.map { |i| i.process_colours.scores }.flatten
+  end
+
+  def processed_images
+    processed = user.images.processed
+    processed += user.images.unprocessed.sample(SAMPLE_SIZE) unless processed.length == user.counts[:media]
+    processed
   end
 end

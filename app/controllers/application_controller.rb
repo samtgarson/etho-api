@@ -5,8 +5,10 @@ end
 class AuthenticationTimeoutError < StandardError
 end
 
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
   attr_reader :current_user
+
+  protect_from_forgery
 
   rescue_from AuthenticationTimeoutError, with: :authentication_timeout
   rescue_from NotAuthenticatedError, with: :user_not_authenticated
@@ -15,10 +17,19 @@ class ApplicationController < ActionController::API
   def authenticate_request!
     fail NotAuthenticatedError unless http_auth_token_present?
     @current_user = JsonWebToken.user_from(@http_auth_token)
+    Insta.access_token = @current_user.token
+
   rescue JWT::ExpiredSignature
     raise AuthenticationTimeoutError
   rescue JWT::VerificationError, JWT::DecodeError
     raise NotAuthenticatedError
+  end
+
+  def greeting
+    render json: { etho: 'Hello, human.' }
+  end
+
+  def index
   end
 
   def heartbeat

@@ -1,0 +1,18 @@
+.button {
+  text-align: center;
+  padding: 20px;
+  font-size: .75em;
+  display: block;
+}
+
+.button--white {
+  background-color: $w;
+}
+
+.button--instagram {
+  background-image: asset-url('ico/instagram.svg');
+  background-repeat: no-repeat;
+  background-position: left 30px center;
+  background-size: 35px;
+  padding-left: 75px;
+}

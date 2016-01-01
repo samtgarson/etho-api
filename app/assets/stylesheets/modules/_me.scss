@@ -1,0 +1,18 @@
+module.me {
+  text-align: center;
+}
+
+.me__avatar {
+  border-radius: 100px;
+  margin: 30px auto 10px;
+}
+
+.me__social {
+  width: 30px;
+  display: inline;
+  margin: 0 10px 30px;
+
+  &.disabled {
+    opacity: 0.3;
+  }
+}

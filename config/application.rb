@@ -25,9 +25,12 @@ module EthoApi
   class Application < Rails::Application
     Mongo::Logger.logger.level = Logger::INFO
     config.autoload_paths += %W(#{config.root}/lib)
-    config.assets.enabled = false
+
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
 
     config.exceptions_app = routes
+
+    config.api_only = false
 
     config.generators do |g|
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
