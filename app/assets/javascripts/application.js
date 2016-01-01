@@ -14,6 +14,9 @@
 //= require_self
 //= require_tree .
 
+var elasticEase = [350, 28];
+var bounceEase = [];
+
 angular
   .module('app', [
     'ui.router',
@@ -23,13 +26,22 @@ angular
     'ngAnimate',
     'ngFitText'
   ])
-  .controller('AppController', ['$scope', '$filter', function($scope, $filter) {
+  .controller('AppController', ['$scope', '$filter', 'User', function($scope, $filter, User) {
     $scope.title = "Etho";
     $scope.$on('$stateChangeSuccess', function(e, toState) {
         $scope.title = toState.name?$filter('titlecase')(toState.name) + ' | Etho':'Etho';
     });
 
     $scope.$on('$stateChangeError', function (e, to, toParams, from, fromParams, error) {
-      console.log(error);
+      console.error(error);
+    });
+
+    $scope.showMenu = false;
+    $scope.user = false;
+
+    $scope.$watch(function ($scope) {
+      return User.loggedIn();
+    }, function (newUser) {
+      $scope.user = newUser;
     });
   }]);

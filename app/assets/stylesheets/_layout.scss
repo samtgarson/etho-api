@@ -4,33 +4,6 @@ body {
   margin: 0;
 }
 
-nav.app-nav {
-  position: fixed;
-  background: $blue;
-  left: 0;
-  top: 0;
-  width: 230px;
-  height: 110px;
-  color: $w;
-  padding: 42px 30px;
-  box-sizing: border-box;
-  z-index: 100;
-
-  #logo {
-    float: left;
-  }
-
-  #menu {
-    float: right;
-  }
-
-  @include small {
-    width: 100%;
-    height: 70px;
-    padding: 22px 20px;
-  }
-}
-
 .module-wrapper {
   max-width: 450px;
   width: 100%;

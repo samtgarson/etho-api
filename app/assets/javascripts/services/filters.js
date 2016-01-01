@@ -22,4 +22,18 @@ angular
       var zeros = "0".repeat(n);
       return (zeros + s).slice(-1 * n);
     };
+  })
+  .filter('name', function () {
+    return function (name, part) {
+      if (!name) return '';
+      var splitName = name.split(' ');
+      switch (part) {
+        case 'first':
+          return splitName[0];
+        case 'last':
+          return splitName[splitName.length - 1];
+        default:
+          return splitName[part];
+      }
+    };
   });

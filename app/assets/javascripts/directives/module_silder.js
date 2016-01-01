@@ -10,7 +10,7 @@ angular
         function setupUnslider() {
           $(el).unslider({
             speed: 625,
-            easing: [350, 28],
+            easing: elasticEase,
             activeClass: 'active',
             selectors: {
               container: 'ul:first',

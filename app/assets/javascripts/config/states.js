@@ -27,6 +27,14 @@ angular.module('app')
                       return $stateParams.user || User.get();
                     }
                   }
+              })
+              .state('logout', {
+                url: '/logout',
+                controller: ['User', 'Token', '$state', function (User, Token, $state) {
+                  User.clear();
+                  Token.clear();
+                  $state.go('home');
+                }]
               });
 
           // default fall back route

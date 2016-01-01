@@ -7,35 +7,45 @@ angular
       return url + path;
     };
   })
-  .service('User', [
+  .factory('User', [
     'Endpoint',
     '$http',
     '$cookies',
     function(Endpoint, $http, $cookies){
-      return {
-        user: null,
+      var service = {
         get: function() {
-          if (this.user) return this.user;
+          if (user) return user;
           if ($cookies.get('user')) return userFromCookies();
           return userFromApi();
         },
         set: function(u) {
-          this.user = u;
+          user = u;
           $cookies.putObject('user', u);
+        },
+        clear: function () {
+          user = null;
+          $cookies.remove('user');
+        },
+        loggedIn: function () {
+          return user
         }
       };
 
+      var user = service.get();
+
       function userFromCookies () {
-        this.user = $cookies.getObject('user');
-        return this.user;
+        user = $cookies.getObject('user');
+        return user;
       }
 
       function userFromApi () {
         return $http.get(Endpoint(['users', 'me'])).then(function(response) {
-          $cookies.putObject('user', response.data);
+          service.set(response.data);
           return response.data;
         });
       }
+
+      return service;
   }])
   .factory('Token', [
     '$cookies',
@@ -46,7 +56,7 @@ angular
       service = {
         get: function() {
           if (tokenHash) return tokenHash.token;
-          if ($cookies.getObject('token')) { refreshIfNecessary(); return tokenFromCookies(); }
+          if ($cookies.getObject('token')) { return tokenFromCookies(); }
           return false;
         },
         set: function(t) {
@@ -56,6 +66,10 @@ angular
         refresh: function () {
           // Refresh the token
           console.log('refreshing');
+        },
+        clear: function () {
+          tokenHash = null;
+          $cookies.remove('token')
         }
       };
 

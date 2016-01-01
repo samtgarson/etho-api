@@ -1,0 +1,11 @@
+nav.app-nav
+  a ui-sref="home" ng-click="showMenu = false"
+    = image_tag 'etho_white.svg', id: 'logo'
+  .menu-btn ng-click="showMenu = !showMenu" ng-mouseover="peakMenu = true" ng-mouseout="peakMenu = false"
+    = image_tag 'menu.svg', id: 'menu'
+nav.sub-nav ng-class="{open: showMenu, peak: peakMenu}" ng-click="showMenu = false"
+  img ng-if="user" ng-src="{{user.profile_picture}}"
+  p ng-if="user" {{user.full_name | name: 'first'}}
+  a ui-sref="profile" ng-if="user" Profile
+  a ui-sref="about" about
+  a ng-if="user" ui-sref="logout" logout
