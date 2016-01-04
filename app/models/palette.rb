@@ -21,7 +21,7 @@ class Palette
     private
 
     def find_primary
-      histogram.first.last.closest_match(PRIMARIES).hex
+      histogram.first.last.closest_match(PRIMARIES).hex unless histogram.first.nil?
     end
 
     def merged_palette

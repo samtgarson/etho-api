@@ -49,12 +49,13 @@ class UserStatisticsService
   def aggregate(key, scope = nil)
     set = user.images
     set = set.send(scope) if scope
-    set.group_by(&key).map do |k, v|
+    grouped_set = set.group_by(&key).map do |k, v|
       {
         value: k,
         count: v.count
       }
     end
+    grouped_set.reject { |k, _a| k.blank? }
   end
 
   def rainbow_hash
