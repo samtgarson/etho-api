@@ -1,4 +1,4 @@
-# Etho Api
+# Etho Api [![codebeat badge](https://codebeat.co/badges/b4ef3066-3834-4817-8255-7ebfe364db0b)](https://codebeat.co/projects/github-com-samtgarson-etho-api)
 
 > Insight Engine for Instagram
 
